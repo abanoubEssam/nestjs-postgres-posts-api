@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { CommentModule } from './comment/comment.module';
 import configuration from './common/configuration';
 import { GlobalModule } from './global/global.module';
+import { LikeModule } from './like/like.module';
 import { PostModule } from './post/post.module';
 import { UserModule } from './user/user.module';
 
@@ -23,7 +24,8 @@ import { UserModule } from './user/user.module';
     UserModule,
     AuthModule,
     PostModule,
-    CommentModule
+    CommentModule,
+    LikeModule
   ],
   controllers: [],
   providers: [],

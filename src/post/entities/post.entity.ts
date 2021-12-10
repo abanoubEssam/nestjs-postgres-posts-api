@@ -1,14 +1,16 @@
 import { CommentEntity } from 'src/comment/entities/comment.entity';
+import { LikeEntity } from 'src/like/entities/like.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'posts' })
 export class PostEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,9 +18,17 @@ export class PostEntity {
   @Column()
   text: string;
 
-  @ManyToOne((type) => UserEntity, (owner) => owner.posts)
+  @ManyToOne((type) => UserEntity, (owner) => owner.posts, { cascade: true })
   owner: UserEntity;
 
-  @OneToMany((type) => CommentEntity, (comment) => comment.post)
+  @OneToMany((type) => CommentEntity, (comment) => comment.post, {
+    cascade: true,
+  })
   comments: CommentEntity[];
+
+  @OneToOne((type) => LikeEntity, (like) => like.owner, { cascade: true })
+  like?: LikeEntity;
+
+  @Column({ default: 0 })
+  likesCount: number;
 }

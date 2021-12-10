@@ -1,4 +1,5 @@
 import { CommentEntity } from 'src/comment/entities/comment.entity';
+import { LikeEntity } from 'src/like/entities/like.entity';
 import { PostEntity } from 'src/post/entities/post.entity';
 import {
   Column,
@@ -8,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({name: "users"})
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -30,4 +31,7 @@ export class UserEntity {
 
   @OneToOne((type) => CommentEntity, (comment) => comment.owner)
   comment?: CommentEntity;
+
+  @OneToOne((type) => LikeEntity, (like) => like.owner)
+  like?: LikeEntity;
 }

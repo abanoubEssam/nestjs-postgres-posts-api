@@ -38,4 +38,20 @@ export class PostService {
       ...createPostDto,
     });
   }
+
+  async incrementLikesCount(postId: number) {
+    return await this._postRepository.increment(
+      { id: postId },
+      'likesCount',
+      1,
+    );
+  }
+
+  async decrementLikesCount(postId: number) {
+    return await this._postRepository.decrement(
+      { id: postId },
+      'likesCount',
+      1,
+    );
+  }
 }

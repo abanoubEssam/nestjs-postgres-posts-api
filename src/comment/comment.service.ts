@@ -24,7 +24,7 @@ export class CommentService {
   async findById(postId: number, id: number): Promise<CommentEntity> {
     const comment = await this._commentRepository.findOne({
       where: { post: postId, id },
-      relations: ['post', 'owner'],
+      relations: ['post', 'owner' , 'post.owner'],
     });
     return comment;
   }

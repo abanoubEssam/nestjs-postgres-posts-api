@@ -9,15 +9,13 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 
-@Entity({name: "comments"})
-export class CommentEntity {
+@Entity({name: "likes"})
+export class LikeEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  text: string;
-
-  @ManyToOne((type) => PostEntity, (post) => post.comments)
+  @OneToOne((type) => PostEntity, (post) => post.comments)
+  @JoinColumn({ referencedColumnName: "id" })
   post: number | PostEntity;
 
   @OneToOne((type) => UserEntity, (owner) => owner.comment)
