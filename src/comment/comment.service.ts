@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { PaginatedResponse } from 'src/common/utils/paginated-response';
 import { PostService } from 'src/post/post.service';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { FindConditions, Repository } from 'typeorm';
@@ -14,17 +16,31 @@ export class CommentService {
     private _postService: PostService,
   ) {}
 
-  async findAll(postId: number): Promise<CommentEntity[]> {
-    return await this._commentRepository.find({
+  async findAll(
+    postId: number,
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResponse<CommentEntity>> {
+    const page = paginationDto.page || 1;
+    const limit = paginationDto.limit || 10;
+    const [comments, count] = await this._commentRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: paginationDto.limit,
       where: { post: postId },
       relations: ['post', 'owner'],
+    });
+
+    return new PaginatedResponse({
+      data: comments,
+      totalCount: count,
+      page,
+      limit,
     });
   }
 
   async findById(postId: number, id: number): Promise<CommentEntity> {
     const comment = await this._commentRepository.findOne({
       where: { post: postId, id },
-      relations: ['post', 'owner' , 'post.owner'],
+      relations: ['post', 'owner', 'post.owner'],
     });
     return comment;
   }
@@ -32,7 +48,7 @@ export class CommentService {
   async findOne(filter: FindConditions<CommentEntity>): Promise<CommentEntity> {
     return await this._commentRepository.findOne({
       where: filter,
-      relations: ['post' , 'owner'],
+      relations: ['post', 'owner'],
     });
   }
 

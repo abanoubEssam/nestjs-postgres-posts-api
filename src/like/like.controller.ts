@@ -1,6 +1,7 @@
-import { Controller, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { LikeService } from './like.service';
 
@@ -24,5 +25,13 @@ export class LikeController {
     @Param('postId') postId: number,
   ) {
     return await this._likeSerivce.unLikePost(postId, currentUser);
+  }
+
+  @Get('/likes')
+  async findPostLikes(
+    @Param('postId') postId: number,
+    @Query() paginationDto: PaginationDto,
+  ) {
+    return await this._likeSerivce.findPostLikes(postId, paginationDto);
   }
 }

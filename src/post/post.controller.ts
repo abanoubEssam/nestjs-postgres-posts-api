@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { PaginatedResponse } from 'src/common/utils/paginated-response';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { PostEntity } from './entities/post.entity';
@@ -13,8 +15,10 @@ export class PostController {
   constructor(private _postSerivce: PostService) {}
 
   @Get()
-  async findAllUsers(): Promise<PostEntity[]> {
-    return this._postSerivce.findAll();
+  async findAllPosts(
+    @Query() paginationDto: PaginationDto,
+  ): Promise<PaginatedResponse<PostEntity>> {
+    return this._postSerivce.findAll(paginationDto);
   }
 
   @Post()

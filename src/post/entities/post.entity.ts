@@ -26,8 +26,8 @@ export class PostEntity {
   })
   comments: CommentEntity[];
 
-  @OneToOne((type) => LikeEntity, (like) => like.owner, { cascade: true })
-  like?: LikeEntity;
+  @OneToMany((type) => LikeEntity, (like) => like.owner, { cascade: true })
+  likes?: LikeEntity[];
 
   @Column({ default: 0 })
   likesCount: number;

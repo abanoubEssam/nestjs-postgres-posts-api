@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { CreateCommentDto } from './dtos/create-comment.dto';
 import { CommentEntity } from './entities/comment.entity';
 import { CommentService } from './comment.service';
+import { PaginatedResponse } from 'src/common/utils/paginated-response';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @ApiTags('Comments')
 @ApiBearerAuth()
@@ -15,8 +17,9 @@ export class CommentController {
   @Get()
   async findAllUsers(
     @Param('postId') postId: number,
-  ): Promise<CommentEntity[]> {
-    return this._commentSerivce.findAll(postId);
+    @Query() paginationDto: PaginationDto,
+  ): Promise<PaginatedResponse<CommentEntity>> {
+    return this._commentSerivce.findAll(postId, paginationDto);
   }
 
   @Post()

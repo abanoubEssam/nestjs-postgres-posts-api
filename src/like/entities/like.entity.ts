@@ -14,8 +14,7 @@ export class LikeEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne((type) => PostEntity, (post) => post.comments)
-  @JoinColumn({ referencedColumnName: "id" })
+  @ManyToOne((type) => PostEntity, (post) => post.likes)
   post: number | PostEntity;
 
   @OneToOne((type) => UserEntity, (owner) => owner.comment)
