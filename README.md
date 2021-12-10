@@ -16,6 +16,10 @@ $ npm run docker:dev
 
 ```
 
+## App
+
+- Swagger - [Swagger](http://localhost:3100/docs)
+- ApiURL - [API](http://localhost:3100/api/v1)
 
 ## Stay in touch
 
