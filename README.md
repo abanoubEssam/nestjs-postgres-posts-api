@@ -25,4 +25,3 @@ $ npm run docker:dev
 
 - Author - [Abanoub Essam](https://www.linkedin.com/in/abanoub-essam-1b4a31b7/)
 - Twitter - [@abanoubEssam](https://twitter.com/20130130Essam)
-- Phone - [Abanoub's Phone](+201280680253)
