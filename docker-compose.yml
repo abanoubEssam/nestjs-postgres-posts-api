@@ -35,3 +35,9 @@ services:
       - POSTGRES_DB=testdb
       - DB_USER=postgres
       - DB_PASS=postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+
+volumes:
+  postgres-data:
