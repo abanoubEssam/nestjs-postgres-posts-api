@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { comparePasswords } from 'src/common/utils/handle-password';
 import { GenerateTokenProvider } from 'src/global/providers/generate-token.provider';
-import { User } from 'src/user/entities/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { LoginDto } from './dtos/login.dto';
 import { CreateUserDto } from './dtos/sign-up.dto';
@@ -49,7 +49,7 @@ export class AuthService {
   private async _validateUser(
     email: string,
     pass: string,
-  ): Promise<User | null> {
+  ): Promise<UserEntity | null> {
     const user = await this._userService.findOne({ email });
     if (!user) {
       return null

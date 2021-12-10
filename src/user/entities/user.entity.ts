@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { PostEntity } from 'src/post/entities/post.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -17,5 +18,6 @@ export class User {
   @Column({ type: 'date' })
   birthDate: Date;
 
-  
+  @OneToMany((type) => PostEntity, (post) => post.owner)
+  posts?: PostEntity[];
 }
